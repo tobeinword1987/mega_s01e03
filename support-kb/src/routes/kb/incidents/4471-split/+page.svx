@@ -1,0 +1,59 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: support desk
+status: proposed
+reviewed: 2026-10-28
+signature: v1.eyJzdWIiOiI5MzMiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzE5NTM1MCwiZXhwIjoxNzkzMjgxNzUwfQ.1hXujb5wb2ES159qHyBJrpRVhMZoFn5TkfRjSB78wlU
+---
+
+<script>
+  import ProblemCounts from '#lib/kb/ProblemCounts.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+The [#4471 incident page](/kb/incidents/4471) says one bug, one fix. The reports say otherwise.
+Ticket #4471 holds three different problems. Fixing the parser closes only the first.
+
+<Callout kind="warn">
+Not one issue. Merging by subject line (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>)
+put reports with different causes into one ticket. The parser fix will not close the other two.
+</Callout>
+
+## The three problems
+
+<ProblemCounts ticket={4471} />
+
+1. **Parser reads dates month first.** Tenants that write the day first see day and month
+   swapped. This is the bug the desk already knew about. It covers most of the reports.
+2. **The booking-v3 form hint says `MM/DD/YYYY`.** The form tells people to type the month
+   first, and the tenant then reads it day first. The parser fix does not touch this: the
+   hint text and the form need their own change. These reports all arrived through the form.
+3. **A date moves by one day.** The month is right and the day is off by one. Clues in the
+   reports point to time zones (one meeting, two cities, two days; an invite that arrived
+   before the booking). Nobody has confirmed the cause. It needs its own investigation.
+
+## How the reports were sorted
+
+- **One id, one report.** The ticket system exports in overlapping pages, so the same report
+  can come twice. The counts use each id once.
+- **The tenant decides the cause, not intake.** `intakeTag` is a guess made from the
+  reporter's browser. The tenant's locale and booking form say which bug it was.
+- **The body decides the one-day reports.** The desk read five reports as a one-day move.
+  By tenant they would be filed under the parser, but they do not describe a swap.
+
+The desk's own table groups by tenant only. It files the five one-day reports under the
+parser, so it shows 379 there. Take the five out and the parser count is the 374 above.
+
+<CauseTable ticket={4471} />
+
+## What to do
+
+- Keep the parser fix on its ticket, and count only the swap reports against it.
+- Open a separate ticket for the booking-v3 form hint.
+- Open a separate ticket for the one-day move, and ask for more detail from the five reporters.
+- When the desk merges, look at the tenant and the channel as well as the subject line.
+
+<RenderStamp {signature} />
