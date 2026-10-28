@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · two problems, not one'
 owner: support desk
-status: proposed
+status: closed
 reviewed: 2026-10-28
 signature: v1.eyJzdWIiOiI5MzMiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzE5NTM1MCwiZXhwIjoxNzkzMjgxNzUwfQ.1hXujb5wb2ES159qHyBJrpRVhMZoFn5TkfRjSB78wlU
 ---
@@ -42,6 +42,13 @@ put reports with different causes into one ticket. The parser fix will not close
   They stay under the cause of their tenant, and the table footnotes them.
 
 <CauseTable ticket={4471} />
+
+## Outcome
+
+Engineering closed #4471 on 5 October.
+
+- **Parser: fixed.** The fix is `fix(dates): parse dd/mm for eu locales`.
+- **Booking-v3 form hint: won't fix.** The booking-v3 form was retired, so the hint no longer ships.
 
 ## What to do
 
